@@ -1,0 +1,33 @@
+version: '1'
+kind: 'app'
+metadata:
+  name: 'hello-world-app'
+  release: '1.0.0'
+  releaseNotes: 'Aha, a release!'
+  description: 'A simple app that just prints out hello world.'
+artifact:
+  name: 'hello-world-app'
+  description: 'source code for my app'
+spec:
+  workflows:
+    - version: '1'
+      kind: 'workflow'
+      metadata:
+        name: 'hello-world'
+        release: '1.0.0'
+        description: 'yet another workflow'
+        namespace: '{{ namespace }}'
+      config:
+        name: 'hello-world'
+        triggers:
+          - cron: '* * * * 1'
+        steps:
+          say-hello:
+            type: "standard"
+            image:
+              dockerfile: 'Dockerfile'
+              context: 'workflows/say-hello-world'
+            resources:
+              instanceTypeId: 21
+              storage: '10GB'
+            command: 'python main.py'

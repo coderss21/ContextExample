@@ -1,0 +1,23 @@
+version: '1'
+kind: 'workflow'
+metadata:
+  name: 'say-hello-world'
+  release: '0.0.1'
+  description: 'A hello world workflow'
+  namespace: '{{ namespace }}'
+  tags:
+    - name: 'sample'
+    - name: 'block'
+config:
+  name: 'say-hello-world'
+  triggers:
+    - cron: '* * * * 1'
+  steps:
+    say-hello:
+      image:
+        dockerfile: 'Dockerfile'
+        context: '.'
+      resources:
+        instanceTypeId: 23
+        storage: '10GB'
+      command: 'python main.py'
